@@ -1,0 +1,39 @@
+{% extends 'book/base_book.html' %}
+
+{% block title %}
+    Notes Title
+{% endblock %}
+
+{% block content %}
+    <table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">User Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Home Page</th>
+            <th scope="col">Text</th>
+            <th scope="col">Tags</th>
+        </tr>
+    </thead>
+  <tbody>
+      {% for note in notes %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ note.user_name }}</td>
+            <td>{{ note.email }}</td>
+            <td>{{ note.home_page }}</td>
+            <td>{{ note.text }}</td>
+            <td>
+                {% for tag in note.tags.all %}
+                    {{ tag }}
+                {% endfor %}
+            </td>
+        </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
+
+
+{% endblock %}
