@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Note
 from django.views.generic import View
+from .utils import ObjectCreateMixin
 from .forms import NoteForm
-
 
 # Create your views here.
 def notes_list(request):
@@ -11,17 +11,6 @@ def notes_list(request):
 
 
 
-class NoteCreate(View):
-    def get(self, request):
-        form = NoteForm()
-        return render(request, 'book/note_create.html', context={'form':form})
-
-    def post(self, request):
-        bound_form = NoteForm(request.POST)
-
-        if bound_form.is_valid():
-            note = bound_form.save()
-            return redirect(notes_list)
-
-        return render(request, 'book/note_create.html', context={'form': bound_form})
-
+class NoteCreate(ObjectCreateMixin, View):
+    model_form = NoteForm
+    template = 'book/note_create.html'
