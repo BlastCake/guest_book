@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.shortcuts import reverse
 # Create your models here.
 
 class Note(models.Model):
@@ -11,8 +11,12 @@ class Note(models.Model):
     tags = models.ManyToManyField('Tag', blank=True, related_name='notes')
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_absolute_url(self):
+        return reverse('list_notes')
+
     def __str__(self):
         return '{} | {} | {}'.format(self.user_name, self.email, self.text)
+
 
 
 class Tag(models.Model):
