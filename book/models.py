@@ -4,7 +4,6 @@ from django.shortcuts import reverse
 
 class Note(models.Model):
     user_name = models.CharField(max_length=150)
-    slug = models.SlugField(max_length=50, unique=True)
     email = models.EmailField(max_length=150, unique=True)
     home_page = models.URLField(max_length=150, blank=True)
     text = models.TextField(max_length=350)
@@ -12,7 +11,7 @@ class Note(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def get_absolute_url(self):
-        return reverse('list_notes')
+        return reverse('notes_list_url')
 
     def __str__(self):
         return '{} | {} | {}'.format(self.user_name, self.email, self.text)
@@ -21,7 +20,9 @@ class Note(models.Model):
 
 class Tag(models.Model):
     title = models.CharField(max_length=50)
-    slug = models.SlugField(max_length=50)
+
+    def get_absolute_url(self):
+        return reverse('tags_list_url')
 
     def __str__(self):
         return self.title
